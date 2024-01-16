@@ -1,0 +1,3 @@
+/home/mike/Projects/aisd/build/CMakeFiles/probability.dir
+/home/mike/Projects/aisd/build/CMakeFiles/edit_cache.dir
+/home/mike/Projects/aisd/build/CMakeFiles/rebuild_cache.dir
