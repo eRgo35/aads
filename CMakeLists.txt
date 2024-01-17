@@ -7,4 +7,6 @@ project(probability
 message(STATUS "Michał Czyż (c) 2024")
 message(STATUS "GNU GPL 3")
 
+
 add_executable(probability src/compress.cpp)
+

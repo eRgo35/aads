@@ -1,18 +1,20 @@
 #include <iostream>
 #include <map>
+#include <random>
+#include <iomanip>
 
-std::pair<double, double> calculate_range(char letter, std::map<char, double> &input_probabilities, std::pair<double, double> &range)
+std::pair<long double, long double> calculate_range(char letter, std::map<char, long double> &input_probabilities, std::pair<long double, long double> &range)
 {
-    std::map<char, std::pair<double, double>> input_total_probabilities;
-    double lower_bound = range.first;
-    double upper_bound = 0;
+    std::map<char, std::pair<long double, long double>> input_total_probabilities;
+    long double lower_bound = range.first;
+    long double upper_bound = range.second;
+    long double range_length = range.second - range.first;
 
-    for (std::pair<char, double> probability : input_probabilities)
+    for (std::pair<char, long double> probability : input_probabilities)
     {
-        upper_bound += probability.second;
-        double up = upper_bound * range.second;
-        input_total_probabilities[probability.first] = {lower_bound, up};
-        lower_bound = up;
+        long double probability_range = range_length * probability.second;
+        input_total_probabilities[probability.first] = {lower_bound, lower_bound + probability_range};
+        lower_bound += probability_range;
     }
 
     for (auto i : input_total_probabilities)
@@ -23,9 +25,9 @@ std::pair<double, double> calculate_range(char letter, std::map<char, double> &i
     return {input_total_probabilities[letter].first, input_total_probabilities[letter].second};
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-    std::string input = "ABAC";
+    std::string input = "ABRACADABRABARAABRA";
     double omega = input.length();
     std::map<char, int> input_letters;
 
@@ -41,7 +43,7 @@ int main()
 
     std::cout << std::endl;
 
-    std::map<char, double> input_probabilities;
+    std::map<char, long double> input_probabilities;
 
     for (std::pair<char, int> letter : input_letters)
     {
@@ -55,25 +57,21 @@ int main()
 
     std::cout << std::endl;
 
-    std::pair<double, double> range = {0, 1};
-    range = calculate_range(input[0], input_probabilities, range);
+    std::pair<long double, long double> range = {0, 1};
 
-    std::cout << std::endl << range.first << ", " << range.second << std::endl << std::endl;
+    for (char letter : input)
+    {
+        range = calculate_range(letter, input_probabilities, range);
+        std::cout << std::endl << std::setprecision(128) << "(" << range.first << ", " << range.second << ")" << std::endl << std::endl;
+    }
 
+    std::cout << "---------------------------------------------" << std::endl << std::endl;
 
-    range = calculate_range(input[1], input_probabilities, range);
+    std::random_device rand_dev;
+    std::mt19937 generator(rand_dev());
+    std::uniform_real_distribution<long double> distr(range.first, range.second);
 
-    std::cout << std::endl << range.first << ", " << range.second << std::endl << std::endl;
-
-    range = calculate_range(input[2], input_probabilities, range);
-
-    std::cout << std::endl << range.first << ", " << range.second << std::endl << std::endl;
-
-    range = calculate_range(input[3], input_probabilities, range);
-    
-    std::cout << std::endl;
-
-    std::cout << "(" << range.first << ", " << range.second << ")" << std::endl;
+    std::cout << distr(generator) << std::endl;
 
     return 0;
 }
