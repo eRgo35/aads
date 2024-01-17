@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/mike/Projects/aisd/build",
-  "command": "/usr/bin/g++ -g -o CMakeFiles/probability.dir/src/compress.cpp.o -c /home/mike/Projects/aisd/src/compress.cpp",
-  "file": "/home/mike/Projects/aisd/src/compress.cpp",
-  "output": "CMakeFiles/probability.dir/src/compress.cpp.o"
-}
-]
