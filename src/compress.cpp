@@ -27,7 +27,7 @@ std::pair<long double, long double> calculate_range(char letter, std::map<char, 
 
 int main(int argc, char* argv[])
 {
-    std::string input = "ABRACADABRABARAABRA";
+    std::string input = "BACA";
     double omega = input.length();
     std::map<char, int> input_letters;
 
